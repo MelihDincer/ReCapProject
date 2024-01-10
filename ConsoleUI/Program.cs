@@ -5,14 +5,7 @@ using Entities.Concrete;
 CarManager carManager = new CarManager(new InMemoryCarDal());
 
 Console.WriteLine("Mevcut Liste \n");
-foreach (var car in carManager.TGetAll())
-{
-    Console.WriteLine("Araç Yılı: " + car.ModelYear + " Günlük Ücret: " + car.DailyPrice + " Açıklama: " + car.Description);
-    Console.WriteLine("\n");
-}
-
-Console.WriteLine("**********************************************************************************************************************");
-Console.WriteLine("********************************************************************************************************************** \n\n");
+GetCarList(carManager);
 
 //Ekleme işlemi
 carManager.TAdd(new Car
@@ -24,14 +17,7 @@ carManager.TAdd(new Car
 });
 
 Console.WriteLine("Ekleme İşlemi Sonrası \n");
-foreach (var car in carManager.TGetAll())
-{
-    Console.WriteLine("Araç Yılı: " + car.ModelYear + " Günlük Ücret: " + car.DailyPrice + " Açıklama: " + car.Description);
-    Console.WriteLine("\n");
-}
-
-Console.WriteLine("**********************************************************************************************************************");
-Console.WriteLine("********************************************************************************************************************** \n\n");
+GetCarList(carManager);
 
 //Silme İşlemi
 carManager.TDelete(new Car
@@ -40,19 +26,12 @@ carManager.TDelete(new Car
 });
 
 Console.WriteLine("Silme İşlemi Sonrası \n");
-foreach (var car in carManager.TGetAll())
-{
-    Console.WriteLine("Araç Yılı: " + car.ModelYear + " Günlük Ücret: " + car.DailyPrice + " Açıklama: " + car.Description);
-    Console.WriteLine("\n");
-}
-
-Console.WriteLine("**********************************************************************************************************************");
-Console.WriteLine("********************************************************************************************************************** \n\n");
+GetCarList(carManager);
 
 //Güncelleme İşlemi
 carManager.TUpdate(new Car
 {
-    Id=5,
+    Id = 5,
     BrandId = 5,
     ColorId = 5,
     ModelYear = 2010,
@@ -61,18 +40,22 @@ carManager.TUpdate(new Car
 });
 
 Console.WriteLine("Güncelleme İşlemi Sonrası \n");
-foreach (var car in carManager.TGetAll())
-{
-    Console.WriteLine("Araç Yılı: " + car.ModelYear + " Günlük Ücret: " + car.DailyPrice + " Açıklama: " + car.Description);
-    Console.WriteLine("\n");
-}
-
-Console.WriteLine("**********************************************************************************************************************");
-Console.WriteLine("********************************************************************************************************************** \n\n");
+GetCarList(carManager);
 
 //Id Değerine Göre Listeleme İşlemi
 Console.WriteLine("1 Numaralı Araba Bilgisi \n");
-foreach(var car in carManager.TGetById(1))
+foreach (var car in carManager.TGetById(1))
 {
     Console.WriteLine("Araç Yılı: " + car.ModelYear + " Günlük Ücret: " + car.DailyPrice + " Açıklama: " + car.Description);
+}
+
+static void GetCarList(CarManager carManager)
+{
+    foreach (var car in carManager.TGetAll())
+    {
+        Console.WriteLine("Araç Yılı: " + car.ModelYear + " Günlük Ücret: " + car.DailyPrice + " Açıklama: " + car.Description);
+        Console.WriteLine("\n");
+    }
+    Console.WriteLine("**********************************************************************************************************************");
+    Console.WriteLine("********************************************************************************************************************** \n\n");
 }
