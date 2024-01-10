@@ -12,8 +12,8 @@ namespace Entities.Concrete
         public int Id{ get; set; }
         public int BrandId{ get; set; }//Marka Id
         public int ColorId{ get; set; }
-        public int ModelYear{ get; set; }
-        public decimal DailyPrice{ get; set; }
-        public decimal Description{ get; set; }
+        public int ModelYear { get; set; }
+        public decimal DailyPrice { get; set; }
+        public string Description{ get; set; }
     }
 }
