@@ -5,4 +5,5 @@
 ![image](https://github.com/MelihDincer/ReCapProject/assets/115299123/3adf452a-0d50-4b4d-aae8-d0ca6f59527b)
 
 ### Test İşlemi
-![Ekran görüntüsü 2024-01-10 141313](https://github.com/MelihDincer/ReCapProject/assets/115299123/03d39a98-d314-4b19-a503-774af7575065)
+![image](https://github.com/MelihDincer/ReCapProject/assets/115299123/bc81d3a6-f588-484a-8abd-60545fcff830)
+
