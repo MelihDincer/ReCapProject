@@ -1,12 +1,58 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 
-CarManager carManager = new CarManager(new EfCarDal(), new EfColorDal(), new EfBrandDal());
+//CarTest();
+//BrandTest();
+static void CarTest()
+{
+    CarManager carManager = new CarManager(new EfCarDal());
+    foreach (var car in carManager.GetCarDetails())
+    {
+        Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
+    }
+
+    carManager.Add(new Car
+    {
+        Id = 11,
+        ColorId = 1,
+        BrandId = 1,
+        CarName = "Deneme",
+        DailyPrice = 315,
+        ModelYear = 2021,
+        Description = "DENEMEEEE"
+    });
 
 
+    Console.WriteLine("**********************************************************************************************************************");
 
+
+    foreach (var car in carManager.GetCarDetails())
+    {
+        Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
+    }
+}
+static void BrandTest()
+{
+    BrandManager brandManager = new BrandManager(new EfBrandDal());
+    foreach (var brand in brandManager.GetAll())
+    {
+        Console.WriteLine(brand.Name);
+    }
+    brandManager.Add(new Brand
+    {
+        Name = "Toyota"
+    });
+    Console.WriteLine("**********************************************************************************************************************");
+
+    foreach (var brand in brandManager.GetAll())
+    {
+        Console.WriteLine(brand.Name);
+    }
+}
+
+
+//--- INMEMORY TESTLERİ ---
 
 //Console.WriteLine("Mevcut Liste \n");
 //GetCarList(carManager);
@@ -62,4 +108,4 @@ CarManager carManager = new CarManager(new EfCarDal(), new EfColorDal(), new EfB
 //    }
 //    Console.WriteLine("**********************************************************************************************************************");
 //    Console.WriteLine("********************************************************************************************************************** \n\n");
-//}
+}

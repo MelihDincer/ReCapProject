@@ -1,62 +1,33 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, Context>, ICarDal
     {
-        public void Add(Car entity)
+        //Araba bilgileri içerisinde brand ve color bilgilerinin Id olarak değil anlamlı bir metin olarak alınıp bilgilerin listelenmesi.
+        public List<CarDetailDto> GetCarDetails()
         {
             using (Context context = new Context())
             {
-                var addedEntity = context.Entry(entity); //Referansı yakala.
-                addedEntity.State = EntityState.Added; //Aslında o bir eklenecek nesne.
-                context.SaveChanges(); //Kaydet
-            }
-        }
-
-        public void Delete(Car entity)
-        {
-            using (Context context = new Context())
-            {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
-        }
-
-        public Car Get(Expression<Func<Car, bool>> filter)
-        {
-            using (Context context = new Context())
-            {
-                return context.Set<Car>().SingleOrDefault(filter);
-            }
-        }
-
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
-        {
-            using (Context context = new Context())
-            {
-                return filter == null
-                    ? context.Set<Car>().ToList()
-                    : context.Set<Car>().Where(filter).ToList();
-            }
-        }
-
-        public void Update(Car entity)
-        {
-            using (Context context = new Context())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                var result = from car in context.Cars
+                             join brand in context.Brands
+                             on car.BrandId equals brand.Id
+                             join color in context.Colors
+                             on car.ColorId equals color.Id
+                             select new CarDetailDto
+                             {
+                                 Id = car.Id,
+                                 CarName = car.CarName,
+                                 BrandName = brand.Name,
+                                 ColorName = color.Name,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description, 
+                                 ModelYear = car.ModelYear
+                             };
+                return result.ToList();
             }
         }
     }
