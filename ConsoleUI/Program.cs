@@ -2,7 +2,7 @@
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 
-//CarTest();
+CarTest();
 //BrandTest();
 static void CarTest()
 {
@@ -14,12 +14,11 @@ static void CarTest()
 
     carManager.Add(new Car
     {
-        Id = 11,
-        ColorId = 1,
-        BrandId = 1,
-        CarName = "Deneme",
-        DailyPrice = 315,
-        ModelYear = 2021,
+        ColorId = 3,
+        BrandId = 3,
+        CarName = "Süüü",
+        DailyPrice = 299.54565456465456465465456415144561654M,
+        ModelYear = 2023,
         Description = "DENEMEEEE"
     });
 
@@ -108,4 +107,4 @@ static void BrandTest()
 //    }
 //    Console.WriteLine("**********************************************************************************************************************");
 //    Console.WriteLine("********************************************************************************************************************** \n\n");
-}
+//}
