@@ -1,53 +1,205 @@
 ﻿using Business.Concrete;
+using Business.Constants;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 
-CarTest();
+//CarTest();
 //BrandTest();
+//UserTest();
+//CustomerTest();
+RentalTest();
+
 static void CarTest()
 {
     CarManager carManager = new CarManager(new EfCarDal());
-    foreach (var car in carManager.GetCarDetails())
-    {
-        Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
-    }
 
-    carManager.Add(new Car
+    var result = carManager.GetCarDetails();
+    //var result = carManager.GetCarsByBrandId(11);
+    if (result.Success)
+    {
+        foreach (var car in result.Data)
+        {
+            Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
+        }
+        //foreach (var car in result.Data)
+        //{
+        //    Console.WriteLine(car.CarName);
+        //}
+    }
+    else
+    {
+        Console.WriteLine(result.Message);
+    }
+    //foreach (var car in carManager.GetCarDetails())
+    //{
+    //    Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
+    //}
+    var result2 = carManager.Add(new Car
     {
         ColorId = 3,
         BrandId = 3,
-        CarName = "Süüü",
+        CarName = "Canavar Bir Model",
         DailyPrice = 299.54565456465456465465456415144561654M,
         ModelYear = 2023,
-        Description = "DENEMEEEE"
+        Description = "Testt"
     });
-
-
-    Console.WriteLine("**********************************************************************************************************************");
-
-
-    foreach (var car in carManager.GetCarDetails())
+    if (result2.Success)
     {
-        Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
+        Console.WriteLine(result2.Message);
     }
+    else
+    {
+        Console.WriteLine(result2.Message);
+    }
+
+
+    //Console.WriteLine("**********************************************************************************************************************");
+
+
+    //foreach (var car in carManager.GetCarDetails())
+    //{
+    //    Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
+    //}
 }
 static void BrandTest()
 {
     BrandManager brandManager = new BrandManager(new EfBrandDal());
-    foreach (var brand in brandManager.GetAll())
+    var result = brandManager.GetAll();
+    if (result.Success)
     {
-        Console.WriteLine(brand.Name);
+        foreach (var brand in result.Data)
+        {
+            Console.WriteLine(brand.Name);
+        }
     }
-    brandManager.Add(new Brand
-    {
-        Name = "Toyota"
-    });
-    Console.WriteLine("**********************************************************************************************************************");
+    //foreach (var brand in brandManager.GetAll())
+    //{
+    //    Console.WriteLine(brand.Name);
+    //}
+    //brandManager.Add(new Brand
+    //{
+    //    Name = "Toyota"
+    //});
+    //Console.WriteLine("**********************************************************************************************************************");
 
-    foreach (var brand in brandManager.GetAll())
+    //foreach (var brand in brandManager.GetAll())
+    //{
+    //    Console.WriteLine(brand.Name);
+    //}
+}
+static void CustomerTest()
+{
+    CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+
+    var result = customerManager.GetAll();
+    if (result.Success)
     {
-        Console.WriteLine(brand.Name);
+        foreach (var customer in result.Data)
+        {
+            Console.WriteLine(customer.CustomerId + "--" + customer.UserId + "--" + customer.CompanyName);
+        }
+        Console.WriteLine(result.Message);
     }
+    else
+    {
+        Console.WriteLine(result.Message);
+    }
+    customerManager.Add(new Customer
+    {
+        UserId = 2,
+        CompanyName = "Dinçer Emlak & Gayrimenkul Ltd. Şti.",
+    });
+
+    var result2 = customerManager.GetAll();
+
+    if (result.Success)
+    {
+        foreach (var customer in result2.Data)
+        {
+            Console.WriteLine(customer.CustomerId + "--" + customer.UserId + "--" + customer.CompanyName);
+        }
+        Console.WriteLine(result.Message);
+    }
+    else
+    {
+        Console.WriteLine(result2.Message);
+    }
+}
+static void UserTest()
+{
+    UserManager userManager = new UserManager(new EfUserDal());
+    userManager.Add(new User
+    {
+        FirstName = "Melih",
+        LastName = "Dinçer",
+        Email = "m_dincer41@hotmail.com",
+        Password = "123456"
+    });
+
+    var result = userManager.GetAll();
+    if (result.Success)
+    {
+        foreach (var user in result.Data)
+        {
+            Console.WriteLine(user.UserId + "--" + user.FirstName + "--" + user.LastName + "--" + user.Email + "--" + user.Password);
+        }
+        Console.WriteLine(result.Message);
+    }
+    else
+    {
+        Console.WriteLine(result.Message);
+    }
+}
+static void RentalTest()
+{
+    RentalManager rentalManager = new RentalManager(new EfRentalDal());
+    var result = rentalManager.GetRentalDetails();
+    if (result == null)
+    {
+        Console.WriteLine("Daha önce kiralanan bir araç bulunmamaktadır..");
+    }
+    else
+    {
+        foreach (var rental in result.Data)
+        {
+            Console.WriteLine(rental.RentalId + " -- " + rental.CarName + " -- " + rental.CustomerName + " -- " + rental.RentDate.ToString("dd MMM yyyy"));
+        }
+        Console.WriteLine(result.Message);
+    }
+
+    var addedRental = rentalManager.Add(new Rental
+    {
+        CustomerId = 2,
+        CarId = 7,
+        RentDate = DateTime.Now
+    });
+
+    if (addedRental.Success)
+    {
+        Console.WriteLine(addedRental.Message);
+    }
+    else
+    {
+        Console.WriteLine(addedRental.Message);
+    }
+
+    //var result3 = rentalManager.CarDeliver(2);
+    //if (result3.Success)
+    //{
+    //    Console.WriteLine(result3.Message);
+    //}
+    //else
+    //{
+    //    Console.WriteLine(result3.Message);
+    //}
+
+    var result2 = rentalManager.GetRentalDetails();
+    foreach (var rental in result2.Data)
+    {
+        Console.WriteLine(rental.RentalId + " -- " + rental.CarName + " -- " + rental.CustomerName + " -- " + rental.RentDate.ToString("dd MMM yyyy"));
+    }
+    Console.WriteLine(result2.Message);
+
 }
 
 
