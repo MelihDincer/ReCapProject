@@ -47,10 +47,7 @@ namespace Business.Concrete
                 {
                     return new ErrorResult(Messages.CarDailyPriceInvalid);
                 }
-                else
-                {
-                    return new ErrorResult(Messages.UnknownError);
-                }
+                return new ErrorResult(Messages.UnknownError);
             }
             return new ErrorResult(Messages.CarAdded);
         }
