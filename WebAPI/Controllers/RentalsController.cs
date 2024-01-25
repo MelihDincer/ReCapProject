@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _rentalService.GetAll();
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result);
             }
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _rentalService.GetByRentalId(id);
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result);
             }
@@ -74,6 +74,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult CreateRental(Rental rental)
         {
+            rental.RentDate = DateTime.Now;
             var result = _rentalService.Add(rental);
             if (result.Success)
             {

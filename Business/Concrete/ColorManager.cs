@@ -1,8 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities;
 using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 
 namespace Business.Concrete
@@ -25,25 +26,22 @@ namespace Business.Concrete
             return new SuccessDataResult<Color>(_colorDal.Get(b => b.ColorId == id));
         }
 
-        public IResult Add(Color Color)
+        public IResult Add(Color color)
         {
-            if (Color.Name.Length >= 2)
-            {
-                _colorDal.Add(Color);
-                return new SuccessResult(Messages.ColorAdded);
-            }
-            return new ErrorResult(Messages.ColorNameInvalid);
+            ValidationTool.Validate(new ColorValidator(), color);
+            _colorDal.Add(color);
+            return new SuccessResult(Messages.ColorAdded);
         }
 
-        public IResult Delete(Color Color)
+        public IResult Delete(Color color)
         {
-            _colorDal.Delete(Color);
+            _colorDal.Delete(color);
             return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public IResult Update(Color Color)
+        public IResult Update(Color color)
         {
-            _colorDal.Update(Color);
+            _colorDal.Update(color);
             return new SuccessResult(Messages.ColorUpdated);
         }
     }

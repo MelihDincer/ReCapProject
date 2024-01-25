@@ -18,31 +18,33 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
+            //Kiralanacak araç daha önce kiralanmış mı diye kontrol et.
             var rentACar = _rentalDal.Get(r => r.CarId == rental.CarId);
+            //Bu araç daha önce "hiç" kiralanmamış ise kiralama işlemini başarıyla gerçekleştir.
             if (rentACar == null)
             {
                 _rentalDal.Add(rental);
                 return new SuccessResult(Messages.RentalAdded);
             }
-            else if(rentACar != null)
+            //Bu araç daha önce bir kez de olsa kiralanmış ise
+            else
             {
+                //Bu araç kiralanmak istenen araç ise ve bu aracın kiralama bilgilerinde teslim edilme tarihi(ReturnDate) boş(null) ise işlem başarısız.
                 if (rentACar.CarId == rental.CarId && rentACar.ReturnDate == null)
                 {
                     return new ErrorResult(Messages.RentalInvalid);
                 }
+                //Değilse kiralama işlemini başarıyla gerçekleştir.
                 _rentalDal.Add(rental);
                 return new SuccessResult(Messages.RentalAdded);
             }
-            else
-            {
-                return new ErrorResult(Messages.RentalInvalid);
-            }
         }
 
+        //Kiralanan aracın teslim edilmesi
         public IResult CarDeliver(int rentalId)
         {
-            var rental = _rentalDal.Get(r=>r.RentalId ==  rentalId);
-            if(rental != null)
+            var rentalCar = _rentalDal.Get(r => r.CarId == rentalId);
+            if (rentalCar != null)
             {
                 _rentalDal.CarDeliver(rentalId);
                 return new SuccessResult(Messages.CarDeliver);
@@ -83,7 +85,7 @@ namespace Business.Concrete
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(),Messages.RentalsListed);
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(), Messages.RentalsListed);
         }
 
         public IResult Update(Rental rental)
