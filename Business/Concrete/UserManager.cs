@@ -19,6 +19,8 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
+        //Bu Add metodunu UserValidator kullanarak doğrula
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
             ValidationTool.Validate(new UserValidator(), user);
