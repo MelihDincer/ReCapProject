@@ -96,7 +96,7 @@ static void CustomerTest()
     {
         foreach (var customer in result.Data)
         {
-            Console.WriteLine(customer.CustomerId + "--" + customer.UserId + "--" + customer.CompanyName);
+            Console.WriteLine(customer.Id + "--" + customer.UserId + "--" + customer.CompanyName);
         }
         Console.WriteLine(result.Message);
     }
@@ -116,7 +116,7 @@ static void CustomerTest()
     {
         foreach (var customer in result2.Data)
         {
-            Console.WriteLine(customer.CustomerId + "--" + customer.UserId + "--" + customer.CompanyName);
+            Console.WriteLine(customer.Id + "--" + customer.UserId + "--" + customer.CompanyName);
         }
         Console.WriteLine(result.Message);
     }
@@ -141,7 +141,7 @@ static void UserTest()
     {
         foreach (var user in result.Data)
         {
-            Console.WriteLine(user.UserId + "--" + user.FirstName + "--" + user.LastName + "--" + user.Email + "--" + user.Password);
+            Console.WriteLine(user.Id + "--" + user.FirstName + "--" + user.LastName + "--" + user.Email + "--" + user.Password);
         }
         Console.WriteLine(result.Message);
     }

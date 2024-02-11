@@ -47,5 +47,8 @@ namespace Business.Constants
         public static string CarDeliver = "Araç teslim edilmiştir..";
         public static string CarDeliverEmpty = "Araç teslim edilememiştir. Belirtilen bilgide araç bulunmamaktadır!";
 
+        public static string ImageLimitExceded = "Bu araba için daha fazla resim ekleyemezsiniz. Bir arabanın en fazla 5 resmi olabilir!";
+        public static string ImageUploaded = "Araba resmi başarıyla yüklendi.";
+        public static string ImageDeleted = "Araba resmi başarıyla silindi.";
     }
 }

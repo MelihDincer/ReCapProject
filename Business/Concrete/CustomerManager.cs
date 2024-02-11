@@ -39,12 +39,12 @@ namespace Business.Concrete
 
         public IDataResult<Customer> GetByCustomerId(int customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId));
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == customerId));
         }
 
         public IDataResult<Customer> GetByUserId(int userId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == userId));
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == userId));
         }
 
         public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
